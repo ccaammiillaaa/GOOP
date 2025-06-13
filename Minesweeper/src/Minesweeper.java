@@ -16,8 +16,8 @@ public class Minesweeper {
     }
 
     int tileSize = 70;
-    int numRows = 10;
-    int numCols = 10; /*same as number of rows, as I want a square*/
+    int numRows = 8;
+    int numCols = numRows; /*same as number of rows, as I want a square*/
     int boardWidth = numCols * tileSize;
     int boardHeight = numRows * tileSize; 
 
@@ -56,11 +56,16 @@ public class Minesweeper {
                 MineTile tile = new MineTile(r, c);
                 board[r][c] = tile;
 
+                System.out.println("Added tile at " + r + "," + c);
+
                 tile.setFocusable(false);
                 tile.setMargin(new Insets(0, 0, 0, 0));
                 tile.setFont(new Font("Arial Unicode MS", Font.PLAIN,45));
                 tile.setText(String.valueOf(r) + String.valueOf(c));
                 boardPanel.add(tile);
+                frame.revalidate();
+                frame.repaint();
+
             }
         }
 
