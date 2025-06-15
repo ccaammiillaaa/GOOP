@@ -57,7 +57,7 @@ public class Minesweeper {
                 MineTile tile = new MineTile(r, c);
                 board[r][c] = tile;
 
-                System.out.println("Added tile at " + r + "," + c);
+                // System.out.println("Added tile at " + r + "," + c);
 
                 tile.setFocusable(false);
                 tile.setMargin(new Insets(0, 0, 0, 0));
@@ -92,13 +92,23 @@ public class Minesweeper {
     }
 
     void setMines() {
+        int numBombs = 10;
+        ArrayList<Integer> bombgen = new ArrayList<>();
         mineList = new ArrayList<MineTile>();
 
-        mineList.add(board[2][2]);
-        mineList.add(board[2][3]);
-        mineList.add(board[5][6]);
-        mineList.add(board[3][4]);
-        mineList.add(board[1][1]);
+        for(int i = 0; i<numRows*numCols; i++){
+            bombgen.add(i);
+        }
+        
+        Random r = new Random();
+
+        for(int i = 0; i<numBombs; i++){
+            int bombPlace = r.nextInt(bombgen.size());
+            int bomb = bombgen.get(bombPlace);
+            bombgen.remove(bombPlace);
+            mineList.add(board[bomb/numRows][bomb%numCols]);
+            System.out.println("Bomb added at: " + bomb + " which is at " + bomb/numRows + "," + bomb%numCols);
+        }
     }
 
     void revealMines() {
