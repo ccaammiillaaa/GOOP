@@ -29,9 +29,11 @@ public class Minesweeper {
    
     //initialise 2D array of Mine tiles
     MineTile [][] board = new MineTile[numRows][numCols];
+    //Arraylist for mines
+    ArrayList<MineTile> mineList;
 
     Minesweeper() {
-        frame.setVisible(true);
+        //frame.setVisible(true);
         frame.setSize(boardWidth, boardHeight);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -48,7 +50,6 @@ public class Minesweeper {
         frame.add(textPanel, BorderLayout.NORTH);
 
         boardPanel.setLayout(new GridLayout(numRows, numCols)); //8x8
-        //boardPanel.setBackground(Color.blue);
         frame.add(boardPanel);
 
         for (int r = 0; r < numRows; r++) {
@@ -61,13 +62,49 @@ public class Minesweeper {
                 tile.setFocusable(false);
                 tile.setMargin(new Insets(0, 0, 0, 0));
                 tile.setFont(new Font("Arial Unicode MS", Font.PLAIN,45));
-                tile.setText(String.valueOf(r) + String.valueOf(c));
+                //tile.setText(String.valueOf(r) + String.valueOf(c));
+                tile.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        MineTile tile = (MineTile) e.getSource();
+
+                        //for left click
+                        if (e.getButton() == MouseEvent.BUTTON1) {
+                            if (tile.getText() == "") {
+                                if (mineList.contains(tile)) {
+                                    revealMines();
+                                }
+                            }
+                        }
+                    }
+                });
                 boardPanel.add(tile);
-                frame.revalidate();
+                frame.revalidate(); //for updating the window, ensuring all boxes appear
                 frame.repaint();
 
             }
         }
 
+        frame.setVisible(true); //only first load frame after loading all components
+
+        setMines();
+
+    }
+
+    void setMines() {
+        mineList = new ArrayList<MineTile>();
+
+        mineList.add(board[2][2]);
+        mineList.add(board[2][3]);
+        mineList.add(board[5][6]);
+        mineList.add(board[3][4]);
+        mineList.add(board[1][1]);
+    }
+
+    void revealMines() {
+        for (int i = 0; i < mineList.size(); i++) {
+            MineTile tile = mineList.get(i);
+            tile.setText("💣");
+        }
     }
 }
