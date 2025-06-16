@@ -41,7 +41,7 @@ public class PrimaryController {
                                 if (mineList.contains(tile)) {
                                     new MineRevealer().execute();
                                 } else {
-                                    new SafeTileChecker().execute(tile.getRow(), tile.getCol());
+                                    // new SafeTileChecker().execute(tile.getRow(), tile.getCol());
                                 }
                             }
                             break;

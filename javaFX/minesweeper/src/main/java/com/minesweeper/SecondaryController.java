@@ -1,4 +1,4 @@
-package beebeebooboo;
+package com.minesweeper;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
