@@ -1,12 +1,23 @@
 package com.minesweeper;
 
+
 import java.io.IOException;
 import javafx.fxml.FXML;
 
-public class PrimaryController {
 
-    @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
+import com.minesweeper.modules.Tile;
+import com.minesweeper.modules.Minesweeper;
+
+public class PrimaryController {
+    
+    PrimaryController() {
+        new Minesweeper().Run();
     }
 }
+
+
+
+
+
+
+

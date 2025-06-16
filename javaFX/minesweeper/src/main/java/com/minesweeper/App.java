@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import com.minesweeper.modules.Minesweeper;
+
 /**
  * JavaFX App
  */
@@ -20,6 +22,8 @@ public class App extends Application {
         scene = new Scene(loadFXML("primary"), 640, 480);
         stage.setScene(scene);
         stage.show();
+
+        // new Minesweeper().Run();
     }
 
     static void setRoot(String fxml) throws IOException {
