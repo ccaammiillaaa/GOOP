@@ -1,29 +1,27 @@
-/**
- * Javacode for Minesweeper game
- */
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
-// import Tile.java;
-// import TileTypes.java;
 
 /**
- * Main class for the Minesweeper game using java swing
- * This handles board setup, user interaction with UI and the game logic
+ * Main class for the Minesweeper game using Java Swing
+ * Handles board setup, user interaction with UI and the game logic
+ * Includes an inner class {@link MineTile} to represent individual tiles
+ *
+ * @author Camilla
  */
 public class Minesweeper {
     /**
-     * This represent a tile on the board
-     * Extends JButton to include row and coloum properties
+     * Represents a tile on the Minesweeper board
+     * Extends {@link JButton} to include row and column properties
      */
     private class MineTile extends JButton {
         int r; //row
-        int c; // coloumn 
+        int c; // column
 
         /**
-         * Constuctors, constructs a MineTile with a specified row and coloum
+         * Constructs a MineTile with a specified row and column
          */
         public MineTile(int r, int c) {
             this.r = r;
@@ -32,6 +30,7 @@ public class Minesweeper {
 
         /**
          * Gets the row index of the tile
+         * @return the row index
          */
         public int getRows() {
             return r;
@@ -39,20 +38,23 @@ public class Minesweeper {
 
         /**
          * Sets the row index of the tile
+         * @param r the new row index
          */
         public void setRows(int r) {
             this.r = r;
         }
 
         /**
-         * Gets the coloumn index of the tile
+         * Gets the column index of the tile
+         * @return the column index
          */
         public int getCols() {
             return c;
         }
 
         /**
-         * Sets the coloumn index of the tile
+         * Sets the column index of the tile
+         * @param c the new column index
          */
         public void setCols(int c) {
             this.c = c;
@@ -81,7 +83,8 @@ public class Minesweeper {
     boolean gameOver = false; //default false, as it is first when a bomb is clicked, it is gameover
 
     /**
-     * Constructs the Minesweeper game, initialises UI components and sets up board
+     * Constructs the Minesweeper game
+     * Initialises UI components, the game board and frame
      */
     Minesweeper() {
         //frame.setVisible(true);
@@ -158,7 +161,8 @@ public class Minesweeper {
     }
 
     /**
-     * This generates and places 10 bombs randomly on the board and tracks them in an ArrayList
+     * Randomly generates and places 10 bombs (mines) on the board
+     * Updates the {@code TileTypes} list and tracks mine positions in {@code mineList}
      */
     void setMines() {
         int numBombs = 10;
@@ -180,7 +184,7 @@ public class Minesweeper {
 
                 MineTile tile = board[bomb/numRows][bomb%numCols]; //creates tile reference using division and modulus 
                 mineList.add(tile);
-                tiletypes.set(bombPlace, new Tile(TileTypes.MINE));
+                tiletypes.set(bomb, new Tile(TileTypes.MINE));
 
                 System.out.println("Bomb added at: " + bomb + " which is at " + tile.getRows() + "," + tile.getCols());
 
@@ -192,6 +196,7 @@ public class Minesweeper {
 
     /**
      * Reveals all mines on the board when a bomb is clicked and ends game
+     * Called when the user clicks on a mine
      */
     void revealMines() {
         for (int i = 0; i < mineList.size(); i++) {
@@ -206,7 +211,7 @@ public class Minesweeper {
 
     /**
      * Checks the neighbour tiles for clicked tile
-     * Checks for nearby mines and reveals adjacent tiles recursively
+     * Checks for nearby mines and reveals adjacent tiles
      */
     void checkMine(int r, int c) {
         if (r < 0 || r >= numRows || c < 0 || c >= numCols) {  //if it is out of bounce
@@ -264,13 +269,16 @@ public class Minesweeper {
 
     /**
      * Counts if the specified tile contains a mine
+     * @return 1 if the tile contains a mine, otherwise 0
      */
     int countMine(int r, int c) {
+        int TileIdx = numCols*r+c;
         if (r < 0 || r >= numRows || c < 0 || c >= numCols) { //check if patch is outside the area/out of bounce
             return 0;
         }
-        if (tiletypes.get(numRows*r+c).IsMine()){
-        //if (mineList.contains(board[r][c])) { //check is button is inside area
+        //else {System.out.println("(r,c)" + r + "," + c + " Is bomb? " + tiletypes.get(TileIdx).IsMine() + " Tile Idx: " + TileIdx);}//Debugging
+        if (tiletypes.get(TileIdx).IsMine()){
+            //System.out.println("(r,c)" + r + "," + c + " Tile Idx " + TileIdx);//debuggin
             return 1;
         }
         return 0;

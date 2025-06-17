@@ -1,5 +1,5 @@
 /**
- * sub class to abstract class
+ * Enum type
  */
 public enum TileTypes {
     MINE,

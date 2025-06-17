@@ -1,5 +1,5 @@
 /**
- * Abstract class
+ * Abstract class representing a tile on the board
  */
 public class Tile {
     private TileTypes type;
